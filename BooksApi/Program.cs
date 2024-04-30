@@ -1,8 +1,10 @@
 using BooksApi.Data;
 using BooksApi.Repository;
 using Microsoft.EntityFrameworkCore;
+using Steeltoe.Connector.EFCore;
 using Steeltoe.Connector.MySql.EFCore;
 using Steeltoe.Extensions.Configuration.CloudFoundry;
+using Steeltoe.Management.TaskCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,8 +17,13 @@ builder.Services.AddControllers();
 builder.AddCloudFoundryConfiguration();
 
 builder.Services.AddTransient<IBookRepository, BookRepository>();
-// builder.Services.AddDbContext<BookDbContext>(options => options.UseInMemoryDatabase("BooksDb"));
-builder.Services.AddDbContext<BookDbContext>(options => options.UseMySql(builder.Configuration));
+
+// IN-MEMORY DB
+builder.Services.AddDbContext<BookDbContext>(options => options.UseInMemoryDatabase("BooksDb"));
+
+// MYSQL DB
+// builder.Services.AddDbContext<BookDbContext>(options => options.UseMySql(builder.Configuration));
+// builder.Services.AddTask<MigrateDbContextTask<BookDbContext>>(ServiceLifetime.Transient);
 
 builder.Services.AddCors(options =>
 {
@@ -44,4 +51,4 @@ app.MapControllers()
 
 app.UseCors();
 
-app.Run();
+app.RunWithTasks();
