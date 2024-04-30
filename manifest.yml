@@ -1,0 +1,10 @@
+applications:
+  - name: books
+    path: BooksUi/bin/Release/net8.0/publish/wwwroot
+    buildpacks:
+      - staticfile_buildpack
+  - name: books-api
+    path: BooksApi/bin/Release/net8.0/linux-x64/publish
+    buildpacks:
+      - binary_buildpack
+    command: ./BooksApi --urls http://0.0.0.0:${PORT}

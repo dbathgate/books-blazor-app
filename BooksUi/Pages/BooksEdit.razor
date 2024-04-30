@@ -31,7 +31,7 @@
 
 @code
 {
-    [Parameter] public string id { get; set; }
+    [Parameter] public string? id { get; set; }
     
     private Book book = new();
     
@@ -50,7 +50,7 @@
     private async Task SaveClick()
     {
         var json = JsonContent.Create(book);
-        await Http.PutAsync("http://localhost:5009/api/books", json);
+        await Http.PutAsync($"{Configuration["BooksApi"]}/api/books", json);
         
         Nav.NavigateTo("/books");
     }
