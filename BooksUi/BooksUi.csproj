@@ -15,4 +15,12 @@
     <ProjectReference Include="..\BooksCore\BooksCore.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Include="Staticfile">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </None>
+    <None Include="nginx/**/*">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </None>
+  </ItemGroup>
 </Project>

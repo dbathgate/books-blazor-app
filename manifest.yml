@@ -1,6 +1,6 @@
 applications:
   - name: books
-    path: BooksUi/bin/Release/net8.0/publish/wwwroot
+    path: BooksUi/bin/Release/net8.0/publish
     buildpacks:
       - staticfile_buildpack
   - name: books-api
