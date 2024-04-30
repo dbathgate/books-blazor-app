@@ -1,0 +1,42 @@
+@page "/books/new"
+@using BooksCore.Models
+@inject HttpClient Http
+@inject NavigationManager Nav
+@inject IConfiguration Configuration
+
+<h1>Add Book</h1>
+
+<div class="row">
+    <div class="col-1">
+        <label>Name</label>
+    </div>
+    <div class="col-4">
+        <input type="text" name="name" class="form-control" @bind="@book.Name" />
+    </div>
+</div>
+<div class="row">
+    <div class="col-1">
+        <label>Author</label>
+    </div>
+    <div class="col-4">
+        <input type="text" name="author" class="form-control input-lg" @bind="@book.Author" />
+    </div>
+</div>
+<div class="row">
+    <div class="col-1">
+        <button class="btn btn-primary" @onclick="SaveClick">Save</button>
+    </div>
+</div>
+
+@code
+{
+    private Book book = new() {Id = ""};
+
+    private async Task SaveClick()
+    {
+        var json = JsonContent.Create(book);
+        await Http.PostAsync($"{Configuration["BooksApi"]}/api/books", json);
+
+        Nav.NavigateTo("/books");
+    }
+}
